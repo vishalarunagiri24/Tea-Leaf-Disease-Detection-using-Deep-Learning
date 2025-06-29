@@ -342,12 +342,12 @@ if uploaded_file is not None:
         heatmap = generate_gradcam_heatmap(img_array_preprocessed, model)
         if heatmap is not None:
             # Interactive heatmap adjustment
-            st.subheader("Heatmap of Affected Areas:")
+            st.subheader("🗺️ Heatmap of Affected Areas:")
             threshold_percentile = st.slider("Adjust Heatmap Threshold (Show top X% of focus areas)", 10, 90, 60, step=5)
             heatmap_adjusted = apply_heatmap_threshold(heatmap.copy(), threshold_percentile)
             
             # Display raw heatmap for debugging
-            st.subheader("Raw Heatmap (Grayscale):")
+            st.subheader("🔍 Raw Heatmap (Grayscale):")
             heatmap_normalized = np.uint8(255 * (heatmap_adjusted / (np.max(heatmap_adjusted) + 1e-10)))
             st.image(heatmap_normalized, caption='Raw heatmap (brighter areas = higher focus)', use_container_width=True, clamp=True)
             
@@ -357,29 +357,29 @@ if uploaded_file is not None:
             
             # Calculate and display severity score
             severity = calculate_severity(heatmap_adjusted, mask)
-            st.subheader("Disease Severity Score:")
+            st.subheader("📊 Disease Severity Score:")
             st.write(f"The disease affects approximately **{severity:.2f}%** of the leaf area.")
         else:
             st.image(image, caption='Original image (heatmap generation failed)', use_container_width=True)
             severity = 0
 
     # Display disease insights and management tips
-    st.subheader("ℹDisease Insights:")
+    st.subheader("ℹ️ Disease Insights:")
     insights = disease_insights.get(predicted_class, {})
     st.markdown(f"**Description**: {insights.get('description', 'No information available.')}")
     st.markdown(f"**Symptoms**: {insights.get('symptoms', 'No symptoms available.')}")
     
     # Display environmental risks
-    st.subheader("⚠Environmental Risk Alerts:")
+    st.subheader("⚠️ Environmental Risk Alerts:")
     st.markdown(f"{insights.get('environmental_risks', 'No risks available.')}")
     
-    st.subheader("Management Tips:")
+    st.subheader("🌱 Management Tips:")
     tips = insights.get('management_tips', ['No tips available.'])
     for tip in tips:
         st.markdown(f"- {tip}")
 
     # Generate and provide downloadable PDF report
-    st.subheader("Download Report:")
+    st.subheader("📄 Download Report:")
     if heatmap is not None:
         pdf_data = generate_pdf_report(predicted_class, confidence, severity, superimposed_img, image, insights)
         st.download_button(
