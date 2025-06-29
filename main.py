@@ -37,7 +37,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 # Load the model
 try:
-    model = tf.keras.models.load_model('model/best_vgg19.h5', custom_objects={'preprocess_input': preprocess_input})
+    model = tf.keras.models.load_model('best_vgg19.h5', custom_objects={'preprocess_input': preprocess_input})
 except Exception as e:
     st.error(f"Failed to load the model 'best_vgg19.h5'. Ensure the file is in the project directory. Error: {str(e)}")
     st.stop()
