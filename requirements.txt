@@ -1,8 +1,7 @@
 streamlit
-tensorflow
+tensorflow==2.13.0
 keras
 opencv-python
 matplotlib
 numpy
-Pillow
-rich
+pillow
